@@ -15,14 +15,16 @@ import java.util.InputMismatchException;
  * @author lopez
  */
 public class ProyectoLabProgra {
-static Scanner in;
-static String[] board;
-    
-        public static void main(String[] args) {
-            board = new String[9];
-            
-        
-        
+
+    static int A1, A2, A3, B1, B2, B3, C1, C2, C3;
+    static Scanner in;
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        String prompt = "Ingresar Lugar: ";
+        String humanMove = "";
+        String computerMove = "";
+        boolean gameIsWon = false;
         String NamePlayer1 = "", NamePlayer2 = "";
 
         Scanner read = new Scanner(System.in);
@@ -43,21 +45,164 @@ static String[] board;
         System.out.print("\nSimolo Player 1: " + SimboloPlayer1);
         System.out.print("\n\nPlayer 2: " + NamePlayer2);
         System.out.print("\nSimbolo Player 2: " + SimboloPlayer2 + "\n");
-        populateEmptyBoard();
-        printBoard();
+        for (int i = 1; i <= 9; i++) {
+
+            humanMove = getMove(prompt);
+            updateBoard(humanMove, 1);
+            displayBoard();
+            if (isGameWon()) {
+                System.out.println("You beat me!");
+                gameIsWon = true;
+                break;
+            }
+            if (i < 9) {
+                computerMove = getMove(prompt);
+                updateBoard(computerMove, 2);
+                displayBoard();
+                if (isGameWon()) {
+                    System.out.println("I beat you!");
+                    gameIsWon = true;
+                    break;
+                }
+                prompt = "Please enter your next move: ";
+                i++;
+            }
+            if (!gameIsWon) {
+                System.out.println("It's a draw!");
+            }
+
+            prompt = "Please enter your next move: ";
+            i++;
+        }
     }
-        static void printBoard() {
-		System.out.println("--------------");
-		System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
-		System.out.println("|-----------|");
-		System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
-		System.out.println("|-----------|");
-		System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
-		System.out.println("--------------");
-}
-        static void populateEmptyBoard() {
-		for (int a = 0; a < 9; a++) {
-			board[a] = String.valueOf(a+1);
-		}
-}
+
+    public static String getMove(String prompt) {
+        String play;
+        System.out.print(prompt);
+        do {
+            play = sc.nextLine();
+            if (!isValidPlay(play)) {
+                System.out.println("That is not a valid play.");
+            }
+        } while (!isValidPlay(play));
+        return play;
+    }
+
+    public static boolean isValidPlay(String play) {
+        if (play.equalsIgnoreCase("A1") & A1 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("A2") & A2 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("A3") & A3 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("B1") & B1 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("B2") & B2 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("B3") & B3 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("C1") & C1 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("C2") & C2 == 0) {
+            return true;
+        }
+        if (play.equalsIgnoreCase("C3") & C3 == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void updateBoard(String play, int player) {
+        if (play.equalsIgnoreCase("A1")) {
+            A1 = player;
+        }
+        if (play.equalsIgnoreCase("A2")) {
+            A2 = player;
+        }
+        if (play.equalsIgnoreCase("A3")) {
+            A3 = player;
+        }
+        if (play.equalsIgnoreCase("B1")) {
+            B1 = player;
+        }
+        if (play.equalsIgnoreCase("B2")) {
+            B2 = player;
+        }
+        if (play.equalsIgnoreCase("B3")) {
+            B3 = player;
+        }
+        if (play.equalsIgnoreCase("C1")) {
+            C1 = player;
+        }
+        if (play.equalsIgnoreCase("C2")) {
+            C2 = player;
+        }
+        if (play.equalsIgnoreCase("C3")) {
+            C3 = player;
+        }
+    }
+
+    public static void displayBoard() {
+        String line = "";
+        System.out.println();
+        line = " " + getXO(A1) + " | " + getXO(A2) + " | " + getXO(A3);
+        System.out.println(line);
+        System.out.println("-----------");
+        line = " " + getXO(B1) + " | " + getXO(B2) + " | " + getXO(B3);
+        System.out.println(line);
+        System.out.println("-----------");
+        line = " " + getXO(C1) + " | " + getXO(C2) + " | " + getXO(C3);
+        System.out.println(line);
+        System.out.println();
+    }
+
+    public static String getXO(int square) {
+        if (square == 1) {
+            return "X";
+        }
+        if (square == 2) {
+            return "O";
+        }
+        return " ";
+    }
+
+    public static boolean isGameWon() {
+        if (isRowWon(A1, A2, A3)) {
+            return true;
+        }
+        if (isRowWon(B1, B2, B3)) {
+            return true;
+        }
+        if (isRowWon(C1, C2, C3)) {
+            return true;
+        }
+        if (isRowWon(A1, B1, C1)) {
+            return true;
+        }
+        if (isRowWon(A2, B2, C2)) {
+            return true;
+        }
+        if (isRowWon(A3, B3, C3)) {
+            return true;
+        }
+        if (isRowWon(A1, B2, C3)) {
+            return true;
+        }
+        if (isRowWon(A3, B2, C1)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isRowWon(int a, int b, int c) {
+        return ((a == b) & (a == c) & (a != 0));
+    }
+
 }
