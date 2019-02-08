@@ -4,11 +4,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Clase;
+package ProyectoLabProgra;
 
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 /**
  *
@@ -25,6 +23,7 @@ public class ProyectoLabProgra {
         String humanMove = "";
         String computerMove = "";
         boolean gameIsWon = false;
+        int contPlayer1 = 0, contPlayer2 = 0, contJuego = 0;
         String NamePlayer1 = "", NamePlayer2 = "";
 
         Scanner read = new Scanner(System.in);
@@ -45,35 +44,62 @@ public class ProyectoLabProgra {
         System.out.print("\nSimolo Player 1: " + SimboloPlayer1);
         System.out.print("\n\nPlayer 2: " + NamePlayer2);
         System.out.print("\nSimbolo Player 2: " + SimboloPlayer2 + "\n");
-        for (int i = 1; i <= 9; i++) {
+        do {
+            for (int i = 1; i <= 15; i++) {
 
-            humanMove = getMove(prompt);
-            updateBoard(humanMove, 1);
-            displayBoard();
-            if (isGameWon()) {
-                System.out.println("You beat me!");
-                gameIsWon = true;
-                break;
-            }
-            if (i < 9) {
-                computerMove = getMove(prompt);
-                updateBoard(computerMove, 2);
+                humanMove = getMove(prompt);
+                updateBoard(humanMove, 1);
                 displayBoard();
                 if (isGameWon()) {
-                    System.out.println("I beat you!");
+                    System.out.println("Jugador " + NamePlayer1 + " Ha Ganado!");
                     gameIsWon = true;
+                    contPlayer1++;
+                    System.out.println("Desea Jugar De Nuevo? /nIngrese 0 Para Continuar o 1 Para Salir");
+                    contJuego = read.nextInt();
+                    A1 = 0;
+                    A2 = 0;
+                    A3 = 0;
+                    B1 = 0;
+                    B2 = 0;
+                    B3 = 0;
+                    C1 = 0;
+                    C2 = 0;
+                    C3 = 0;
                     break;
                 }
-                prompt = "Please enter your next move: ";
+                if (i < 15) {
+                    computerMove = getMove(prompt);
+                    updateBoard(computerMove, 2);
+                    displayBoard();
+                    if (isGameWon()) {
+                        System.out.println("Jugador " + NamePlayer1 + " Ha Ganado!");
+                        gameIsWon = true;
+                        contPlayer2++;
+                        System.out.println("Desea Jugar De Nuevo? \nIngrese 0 Para Continuar o 1 Para Salir");
+                        contJuego = read.nextInt();
+                        A1 = 0;
+                        A2 = 0;
+                        A3 = 0;
+                        B1 = 0;
+                        B2 = 0;
+                        B3 = 0;
+                        C1 = 0;
+                        C2 = 0;
+                        C3 = 0;
+                        break;
+                    }
+                    i++;
+                }
+                if (!gameIsWon) {
+                    if (i == 15) {
+                        System.out.println("Es un Empate!");
+                    }
+                }
                 i++;
             }
-            if (!gameIsWon) {
-                System.out.println("It's a draw!");
-            }
-
-            prompt = "Please enter your next move: ";
-            i++;
-        }
+        } while (contJuego != 1);
+        System.out.println("Jugador " + NamePlayer1 + " Ha Ganado " + contPlayer1);
+        System.out.println("Jugador " + NamePlayer2 + " Ha Ganado " + contPlayer2);
     }
 
     public static String getMove(String prompt) {
