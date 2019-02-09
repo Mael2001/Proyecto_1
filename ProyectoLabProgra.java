@@ -4,9 +4,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ProyectoLabProgra;
+package labprogra.Proyecto_1;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class ProyectoLabProgra {
 
     static int A1, A2, A3, B1, B2, B3, C1, C2, C3;
+    static String S1,S2;
     static Scanner in;
     static Scanner sc = new Scanner(System.in);
 
@@ -23,7 +24,7 @@ public class ProyectoLabProgra {
         String humanMove = "";
         String computerMove = "";
         boolean gameIsWon = false;
-        int contPlayer1 = 0, contPlayer2 = 0, contJuego = 0;
+        int contPlayer1 = 0, contPlayer2 = 0, contJuego = 0,contEmpate=0;
         String NamePlayer1 = "", NamePlayer2 = "";
 
         Scanner read = new Scanner(System.in);
@@ -32,18 +33,26 @@ public class ProyectoLabProgra {
         NamePlayer1 = read.next();
 
         System.out.print("\nIngrese simbolo de marca: ");
-        char SimboloPlayer1 = read.next().charAt(0);
+        S1 = read.next();
 
         System.out.print("\nIngrese nombre Player 2: ");
         NamePlayer2 = read.next();
 
         System.out.print("\nIngrese simbolo de marca: ");
-        char SimboloPlayer2 = read.next().charAt(0);
+        S2 = read.next();
 
         System.out.print("\n\nPlayer 1: " + NamePlayer1);
-        System.out.print("\nSimolo Player 1: " + SimboloPlayer1);
+        System.out.print("\nSimolo Player 1: " + S1);
         System.out.print("\n\nPlayer 2: " + NamePlayer2);
-        System.out.print("\nSimbolo Player 2: " + SimboloPlayer2 + "\n");
+        System.out.print("\nSimbolo Player 2: " + S2 + "\n");
+        System.out.println("------------------");
+        System.out.println("A1  |   A2  |   A3");
+        System.out.println("------------------");
+        System.out.println("B1  |   B2  |   B3");
+        System.out.println("------------------");
+        System.out.println("C1  |   C2  |   C3");
+        System.out.println("------------------");
+        contJuego++;
         do {
             for (int i = 1; i <= 15; i++) {
 
@@ -54,7 +63,7 @@ public class ProyectoLabProgra {
                     System.out.println("Jugador " + NamePlayer1 + " Ha Ganado!");
                     gameIsWon = true;
                     contPlayer1++;
-                    System.out.println("Desea Jugar De Nuevo? /nIngrese 0 Para Continuar o 1 Para Salir");
+                    System.out.println("Desea Jugar De Nuevo? \nIngrese 0 Para Continuar o 1 Para Salir");
                     contJuego = read.nextInt();
                     A1 = 0;
                     A2 = 0;
@@ -93,6 +102,19 @@ public class ProyectoLabProgra {
                 if (!gameIsWon) {
                     if (i == 15) {
                         System.out.println("Es un Empate!");
+                        System.out.println("Desea Jugar De Nuevo? \nIngrese 0 Para Continuar o 1 Para Salir");
+                        contJuego = read.nextInt();
+                        A1 = 0;
+                        A2 = 0;
+                        A3 = 0;
+                        B1 = 0;
+                        B2 = 0;
+                        B3 = 0;
+                        C1 = 0;
+                        C2 = 0;
+                        C3 = 0;
+                        contEmpate++;
+                        break;
                     }
                 }
                 i++;
@@ -100,6 +122,8 @@ public class ProyectoLabProgra {
         } while (contJuego != 1);
         System.out.println("Jugador " + NamePlayer1 + " Ha Ganado " + contPlayer1);
         System.out.println("Jugador " + NamePlayer2 + " Ha Ganado " + contPlayer2);
+        System.out.println("Ha Habido "+contEmpate+" Empates");
+        System.out.println("Han Habido "+contJuego+" Juegos");
     }
 
     public static String getMove(String prompt) {
@@ -191,10 +215,10 @@ public class ProyectoLabProgra {
 
     public static String getXO(int square) {
         if (square == 1) {
-            return "X";
+            return S1;
         }
         if (square == 2) {
-            return "O";
+            return S2;
         }
         return " ";
     }
